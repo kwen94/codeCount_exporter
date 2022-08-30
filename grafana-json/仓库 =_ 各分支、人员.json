@@ -1,0 +1,251 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 3,
+  "iteration": 1661827644152,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "pJMnqh_nz"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisSoftMin": 0,
+            "fillOpacity": 83,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1
+          },
+          "mappings": [],
+          "min": -1,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "maxPerRow": 3,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.98,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "right"
+        },
+        "orientation": "horizontal",
+        "showValue": "auto",
+        "stacking": "none",
+        "text": {},
+        "tooltip": {
+          "mode": "single",
+          "sort": "asc"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "repeat": "Branch",
+      "repeatDirection": "h",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "pJMnqh_nz"
+          },
+          "exemplar": false,
+          "expr": "max_over_time(add_code_count_total{gitRepo=\"$GitRepo\", branch=~\"$Branch\"}[$__range]) - min_over_time(add_code_count_total{gitRepo=\"$GitRepo\", branch=~\"$Branch\"}[$__range]) > 0",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "pJMnqh_nz"
+          },
+          "exemplar": false,
+          "expr": "max_over_time(del_code_count_total{gitRepo=\"$GitRepo\", branch=~\"$Branch\"}[$__range]) - min_over_time(del_code_count_total{gitRepo=\"$GitRepo\", branch=~\"$Branch\"}[$__range]) > 0",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "B"
+        }
+      ],
+      "title": "$Branch",
+      "transformations": [
+        {
+          "id": "seriesToColumns",
+          "options": {
+            "byField": "user"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time 1": true,
+              "Time 2": true,
+              "branch 1": true,
+              "branch 2": true,
+              "gitRepo 1": true,
+              "gitRepo 2": true,
+              "instance 1": true,
+              "instance 2": true,
+              "job 1": true,
+              "job 2": true,
+              "user 1": false
+            },
+            "indexByName": {},
+            "renameByName": {
+              "Value #A": "新增",
+              "Value #B": "删除"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "新增"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "barchart"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 34,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "Java/Backend/Base/provider-erp-base-rule.git",
+          "value": "Java/Backend/Base/provider-erp-base-rule.git"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "pJMnqh_nz"
+        },
+        "definition": "query_result(    max_over_time(add_code_count_total{}[$__range])  -  min_over_time(add_code_count_total{}[$__range]) > 0  )",
+        "hide": 0,
+        "includeAll": false,
+        "label": "仓库名",
+        "multi": false,
+        "name": "GitRepo",
+        "options": [],
+        "query": {
+          "query": "query_result(    max_over_time(add_code_count_total{}[$__range])  -  min_over_time(add_code_count_total{}[$__range]) > 0  )",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "/gitRepo=\"(.*.git)\"/",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "pJMnqh_nz"
+        },
+        "definition": "query_result(    max_over_time(add_code_count_total{gitRepo=\"$GitRepo\"}[$__range])  -  min_over_time(add_code_count_total{gitRepo=\"$GitRepo\"}[$__range]) > 0  )",
+        "hide": 0,
+        "includeAll": true,
+        "label": "分支名",
+        "multi": true,
+        "name": "Branch",
+        "options": [],
+        "query": {
+          "query": "query_result(    max_over_time(add_code_count_total{gitRepo=\"$GitRepo\"}[$__range])  -  min_over_time(add_code_count_total{gitRepo=\"$GitRepo\"}[$__range]) > 0  )",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "/branch=\"(.*?)\"/",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1d/d",
+    "to": "now-1d/d"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "仓库 => 各分支、人员",
+  "uid": "nNCi6Isnk",
+  "version": 8,
+  "weekStart": ""
+}
