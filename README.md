@@ -1,6 +1,6 @@
 
 
-封装的数据格式：
+## 封装的数据格式：
 CountData = {
 	"git@github.com:kwen94/codeCount_exporter.git": {
 		"dev": {
@@ -13,3 +13,5 @@ CountData = {
 }
 
 
+## blog
+https://www.kkwen.cn/index.php/archives/53/
